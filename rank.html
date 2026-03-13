@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>다음스포츠 | 순위</title>
+
+    .winrate{
+        
+    }
+</head>
+<body>
+    <script>
+    const jsonUrl = 'https://prof-jwchi.github.io/kopo-front2026/Json/baseball.json';
+
+    fetch(jsonUrl)
+        .then(response => response.json())
+        .then(data => {
+            const teamList = document.getElementById('teamList');
+            //console.log(data.list[0].rank.draw);
+
+            data.list.forEach((team, index) => {
+                teamList.innerHTML += `
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td>${team.shortName}</td>
+                        <td>${team.rank.game}</td>
+                        <td>${team.rank.win}</td>
+                        <td>${team.rank.draw}</td>
+                        <td>${team.rank.loss}</td>
+                        <td class="winrate">${team.rank.wpct}</td>
+                        <td>${team.rank.gb}</td>
+                        <td>${team.rank.streak}</td>
+                    </tr>`;
+                });
+            })
+            .catch(error => {
+                console.error('JSON 파일을 가져오는 데 실패했습니다.', error);
+            });
+    </script>
+
+
+    <h2>종합 순위</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>순위</th>
+                <th>팀</th>
+                <th>경기</th>
+                <th>승</th>
+                <th>무</th>
+                <th>패</th>
+                <th class="winrate">승률</th>
+                <th>게임차</th>
+                <th>연속</th>
+            </tr>
+        </thead>
+        <tbody id ="teamList"></tbody>
+    </table>
+</body>
+</html>
