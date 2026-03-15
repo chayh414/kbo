@@ -4,11 +4,266 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>다음스포츠 | 순위</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="https://t1.daumcdn.net/top/favicon/20241223/daum64x64.png">
 
-    .winrate{
+    <style>
+        /*
+        @font-face {
+            font-family: 'Helvetica';
+            src: url("./HelveticaLight.ttf") format('truetype');
+        }
+            */
+
+        /* 이렇게 하면 폰트를 개별로 지정해주지 않아도 됨!! 기억하기 */
+        /* :not(tbody):not(tbody*) -> tbody와 그 자식들은 제외하겠다는 뜻 */
+        *:not(tbody):not(tbody*){
+            font-family: 'Roboto', 'Noto Sans KR', sans-serif !important;
+        }
+
+        #daumsports {
+            width: 100%;           /* 화면 전체 너비 차지 */
+            display: flex;         /* 중앙 정렬 */
+            justify-content: center; /* 가로 방향 중앙 정렬 */
+            min-height: 100vh;     /* 화면 높이만큼 배경색이 꽉 차게 함 */
+        }
+
+        thead{
+            background-color: #f7f7f7 !important;
+        }
+
+        thead th{
+            height: 44px;
+            vertical-align: middle; /* 세로 중앙 정렬!! */
+            font-weight: 500;
+            border-bottom: 1px solid #ededed;
+        }
         
-    }
+        /* 팀 정보*/
+        .title-record{
+            width: 1100px;
+            /*height: 27px;*/
+            height: auto;
+            padding: 0px 0px 14px;
+            display: flex;
+            justify-content: space-between; /*종합순위와 날짜를 양 끝으로!! 엉엉슨*/
+            align-items: flex-end; /* 종합순위와 날짜의 바닥 라인 맞추기 */
+
+            margin-top: 50px;
+            margin-bottom: 15px;
+            
+        }
+
+        .date-info{
+            /*width: 1100px;*/
+            height: auto;
+            padding: 0;
+            margin: 0;
+            font-family: 'Noto Sans KR' !important;
+            font-size: 13px;
+            font-weight: normal;
+            color: #4c4c4c;
+            text-align: right;
+        }
+        
+        .title-record > h2 { /* 종합 순위 제목 */
+            /*width: 1100px;*/
+            height: auto;
+            font-family: "Noto Sans KR", sans-serif;
+            font-size: 18px;
+            margin: 0;
+            border-collapse: collapse;
+        }
+
+        table{ /* 테이블 전체 크기 조정 */
+            width: 1100px;
+            height: 486px;
+            background-color: transparent !important; /*  테이블 전체 배경을 흰색(또는 투명)으로 초기화 */
+            border-top : 2px solid black;
+            border-collapse: collapse;
+            margin: 0 0 30px;
+            padding: 43px 0 0;
+        }
+
+        .th-rank{ /* [순위] 항목 */
+            font-family: 'Noto Sans KR';
+            text-align: center;
+            color: #7b7b7b;
+            font-size: 13px !important;
+            width: 40px;
+            height: 43px;
+        }
+
+        .team-logo{ /* 로고 이미지 */
+            width: 32px;
+            height: 32px;
+            object-fit: contain;
+        }
+
+        .arrow{ /* 팀 이름 옆 > 꺾새 */
+            font-family: 'Noto Sans KR' !important;
+            color: #ccc;
+            font-size: 13px;
+            color: #4d4d4d;
+            padding: 0 0 0 0;
+        }
+
+        tr{ /* 테이블 안에 내용들 */
+            width: 1100px;
+            height: 44px;
+            
+        }
+
+        .th-team{ /* [팀] 항목 */
+            width: 570px;
+            height: 43px;
+            font-family: 'Noto Sans KR';
+            text-align: left;
+            color: #7b7b7b;
+            font-size: 13px;
+            padding-left: 10px;
+        }
+
+        .th-game{ /* [경기] 항목 */
+            width: 70px;
+            height: 43px;
+            font-family: 'Noto Sans KR';
+            text-align: center;
+            color: #7b7b7b;
+            font-size: 13px;
+        }
+
+        .th-win{ /* [승] 항목 */
+            width: 70px;
+            height: 43px;
+            font-family: 'Noto Sans KR';
+            text-align: center;
+            color: #7b7b7b;
+            font-size: 13px;
+        }
+
+        .th-draw{ /* [무] 항목 */
+            width: 70px;
+            height: 43px;
+            font-family: 'Noto Sans KR';
+            text-align: center;
+            color: #7b7b7b;
+            font-size: 13px;
+        }
+
+        .th-loss{ /* [패] 항목 */
+            width: 70px;
+            height: 43px;
+            font-family: 'Noto Sans KR';
+            text-align: center;
+            color: #7b7b7b;
+            font-size: 13px;
+        }
+
+        .winrate-title{ /*[승률] 항목*/
+            color: #1760F0;
+            width: 70px;
+            height: 43px;
+            font-family: 'Noto Sans KR';
+            text-align: center;
+            font-size: 13px;
+        }
+
+        .th-gb{ /* [게임차] 항목*/
+            width: 70px;
+            height: 43px;
+            font-family: 'Noto Sans KR';
+            text-align: center;
+            color: #7b7b7b;
+            font-size: 13px;
+        }
+
+        .th-streak{ /* [연속] 항목 */
+            width: 70px;
+            height: 43px;
+            font-family: 'Noto Sans KR';
+            text-align: center;
+            color: #7b7b7b;
+            font-size: 13px;
+        }
+         
+        .td-rank{ /* 순위 */
+            font-size: 13px;
+            font-family: 'Noto Sans KR';
+            width: 40px;
+            height: 44px;
+            font-weight: bold;
+            text-align: center;
+
+        }
+        
+        .td-team{ /* 팀 로고 + 이름  */
+            /*min-width: 32px;*/
+            width: 570px;
+            height: 44px;
+            font-size: 13px;
+        } 
+
+        .td-info{ /* 팀 이미지*/
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items:center; /* 세로 가운데 정렬!!*/
+            gap: 6px;
+            white-space: nowrap; /*줄바꿈 방지임!!*/
+        }
+
+        .td-name{ /* 팀 이름 */
+            font-size: 13px;
+            text-align: left;
+        } 
+
+        #teamList { 
+            background-color: #FFFFFF !important; /*데이터가 들어가는 tbody 배경을 흰색으로 고정 */
+        }
+
+        #teamList {
+            border-bottom: 1px solid #ededed;
+        }
+
+        #teamList td {
+            text-align: center;
+            font-family: 'Noto Sans KR';
+            font-size: 13px;
+            height: 44px;
+            border-bottom: 1px solid #f4f4f4;
+        }
+        
+        /* tbody안 짝수 줄에만 배경색 주기(홀수는 odd) */
+        /* tr : Table Row(가로 한 줄 전체) */
+        /* tbody가 부모, 그 안에 tr이 자식으로 있음 */
+        /* tr 중 짝수번째 줄을 다 골라서 배경색을 칠해달라는 것 */
+        #teamList tr:nth-child(even) {
+            background-color: #fcfcfc;
+        }
+
+        /* td : Table Data(줄 안의 한 칸)*/
+        /* tr이 부모, 그 안에 td가 자식으로 있음*/
+        /* td 중 7번째 칸만 골라서 배경색을 칠해주고 폰트를 볼드체로 바꿔달라는 것*/
+        #teamList td:nth-child(7) {
+            background-color: #f4f8ff;
+            font-weight: bold;
+        }
+
+        .footer-info{
+            width: 1100px;
+            height: 32.5px;
+            font-family: 'Noto Sans KR' !important;
+            font-size: 13px;
+            font-weight: 200;
+            margin: -30px 0 30px;
+            padding: 13px 0 0;
+            color: #929292;
+        }
+    </style>
 </head>
+
+
 <body>
     <script>
     const jsonUrl = 'https://prof-jwchi.github.io/kopo-front2026/Json/baseball.json';
@@ -22,8 +277,14 @@
             data.list.forEach((team, index) => {
                 teamList.innerHTML += `
                     <tr>
-                        <td>${index + 1}</td>
-                        <td>${team.shortName}</td>
+                        <td class="td-rank">${index + 1}</td>
+                        <td class="td-team">
+                            <div class="td-info">
+                                <img src="${team.imageUrl}" alt="${team.shortName} 로고" class="team-logo">
+                                <span class="td-name">${team.shortName}</span>
+                                    <span class="arrow">></span>
+                            </div>
+                        </td>
                         <td>${team.rank.game}</td>
                         <td>${team.rank.win}</td>
                         <td>${team.rank.draw}</td>
@@ -40,23 +301,36 @@
     </script>
 
 
-    <h2>종합 순위</h2>
+    
 
-    <table>
-        <thead>
-            <tr>
-                <th>순위</th>
-                <th>팀</th>
-                <th>경기</th>
-                <th>승</th>
-                <th>무</th>
-                <th>패</th>
-                <th class="winrate">승률</th>
-                <th>게임차</th>
-                <th>연속</th>
-            </tr>
-        </thead>
-        <tbody id ="teamList"></tbody>
-    </table>
+        <div id="daumsports">
+            <div class="record">       
+                <div class="title-record">
+                    <h2>종합 순위</h2>
+                    <div class="date-info">※ 2026년 3월 13일 기준</div>
+                </div>
+                
+
+                <table>
+                    <thead>
+                        <tr>
+
+                            <th class="th-rank">순위</th>
+                            <th class="th-team">팀</th>
+                            <th class="th-game">경기</th>
+                            <th class="th-win">승</th>
+                            <th class="th-draw">무</th>
+                            <th class="th-loss">패</th>
+                            <th class="winrate-title">승률</th>
+                            <th class="th-gb">게임차</th>
+                            <th class="th-streak">연속</th>
+                        </tr>
+                    </thead>
+                    <tbody id ="teamList"></tbody>
+                </table>
+
+                <div class="footer-info">1, 2위 최종 순위는 한국시리즈 결과를 반영합니다.</div>
+            </div>
+        </div>
 </body>
 </html>
