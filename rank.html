@@ -21,11 +21,95 @@
             font-family: 'Roboto', 'Noto Sans KR', sans-serif !important;
         }
 
+        .ranking-warp{
+            width: 1100px;
+            margin: auto;
+        }
+
+        .top-control{
+            width: 1100px;
+            display: flex;
+            height: 42px;
+            position: relative;
+            margin-bottom: 18px;
+        }
+
+        .category-tab{
+            display: flex;
+            width: 282px;
+            height: 42px;
+            background-color: #ffffff;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        .category-tab button{
+            width: 94px;
+            height: 42px;
+            border: 1px solid #929292;
+            border-right: none;
+            font-size: 15px;
+            cursor: pointer;
+            background-color: #ffffff;
+        }
+
+        
+        .category-tab button:last-child{
+            border-right: 1px solid #929292;
+        }
+
+        .category-tab button.active{
+            border: 1px solid #ff3b30;
+            position: relative;
+            z-index: 1;
+        }
+
+        .year-select{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            width: 163.78px;
+            height: 45px;
+            position: absolute;
+            left: 50%;
+            top: 0;
+            transform: translateX(-50%);
+        }
+
+        .year-arrow{
+            font-size: 15px;
+            color: #000000;
+            cursor: pointer;
+        }
+
+        .year-arrow.right{
+            color: #929292;
+        }
+
+        .year-box{
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .year-text{
+            font-size: 30px;
+            font-weight: 600;
+            color: #000000;
+        }
+
+        .year-down{
+            font-size: 10px;
+            color: #000000;
+        }
+
         #daumsports {
-            width: 100%;           /* 화면 전체 너비 차지 */
-            display: flex;         /* 중앙 정렬 */
-            justify-content: center; /* 가로 방향 중앙 정렬 */
-            min-height: 100vh;     /* 화면 높이만큼 배경색이 꽉 차게 함 */
+            width: 1100px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
         }
 
         thead{
@@ -49,7 +133,7 @@
             justify-content: space-between; /*종합순위와 날짜를 양 끝으로!! 엉엉슨*/
             align-items: flex-end; /* 종합순위와 날짜의 바닥 라인 맞추기 */
 
-            margin-top: 50px;
+            margin-top: 0px;
             margin-bottom: 15px;
             
         }
@@ -301,36 +385,53 @@
     </script>
 
 
-    
+    <div class="ranking-warp">
+        <div class="top-control">
+            <div class="category-tab">
+                <button class="active">팀</button>
+                <button>투수</button>
+                <button>타자</button>
+            </div>
 
-        <div id="daumsports">
-            <div class="record">       
-                <div class="title-record">
-                    <h2>종합 순위</h2>
-                    <div class="date-info">※ 2026년 3월 13일 기준</div>
+            <div class="year-select">
+                <span class="year-arrow left">＜</span>
+                <div class="year-box">
+                    <span class="year-text">2025</span>
+                    <span class="year-down">▼</span>
                 </div>
-                
-
-                <table>
-                    <thead>
-                        <tr>
-
-                            <th class="th-rank">순위</th>
-                            <th class="th-team">팀</th>
-                            <th class="th-game">경기</th>
-                            <th class="th-win">승</th>
-                            <th class="th-draw">무</th>
-                            <th class="th-loss">패</th>
-                            <th class="winrate-title">승률</th>
-                            <th class="th-gb">게임차</th>
-                            <th class="th-streak">연속</th>
-                        </tr>
-                    </thead>
-                    <tbody id ="teamList"></tbody>
-                </table>
-
-                <div class="footer-info">1, 2위 최종 순위는 한국시리즈 결과를 반영합니다.</div>
+                <span class="year-arrow right">＞</span>
             </div>
         </div>
+    
+    
+
+        <div id="daumsports">       
+            <div class="title-record">
+                <h2>종합 순위</h2>
+                <div class="date-info">※ 2026년 3월 13일 기준</div>
+            </div>
+                
+
+            <table>
+                <thead>
+                    <tr>
+
+                        <th class="th-rank">순위</th>
+                        <th class="th-team">팀</th>
+                        <th class="th-game">경기</th>
+                        <th class="th-win">승</th>
+                        <th class="th-draw">무</th>
+                        <th class="th-loss">패</th>
+                        <th class="winrate-title">승률</th>
+                        <th class="th-gb">게임차</th>
+                        <th class="th-streak">연속</th>
+                    </tr>
+                </thead>
+                <tbody id ="teamList"></tbody>
+            </table>
+
+            <div class="footer-info">1, 2위 최종 순위는 한국시리즈 결과를 반영합니다.</div>
+        </div>
+    </div>
 </body>
 </html>
